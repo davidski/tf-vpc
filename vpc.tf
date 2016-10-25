@@ -3,14 +3,18 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
   enable_dns_support = true
   tags {
-    Name = "niddel"
+    Name       = "${var.name}"
+    project    = "${var.project}"
+    managed_by = "Terraform"
   }
 }
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
-      Name = "main"
+    Name       = "main"
+    project    = "${var.project}"
+    managed_by = "Terraform"
   }
 }
 
@@ -21,7 +25,9 @@ resource "aws_route_table" "r" {
     gateway_id = "${aws_internet_gateway.gw.id}"
   }
   tags {
-    Name = "main"
+    Name       = "main"
+    project    = "${var.project}"
+    managed_by = "Terraform"
   }
 }
 
