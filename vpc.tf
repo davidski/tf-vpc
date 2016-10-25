@@ -3,9 +3,10 @@ data "aws_region" "current" {
 }
 
 resource "aws_vpc" "vpc" {
-  cidr_block = "${var.cidr}"
+  cidr_block           = "${var.cidr}"
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
+
   tags {
     Name       = "${var.name}"
     project    = "${var.project}"
@@ -15,6 +16,7 @@ resource "aws_vpc" "vpc" {
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.vpc.id}"
+
   tags {
     Name       = "main"
     project    = "${var.project}"
@@ -24,10 +26,12 @@ resource "aws_internet_gateway" "gw" {
 
 resource "aws_route_table" "r" {
   vpc_id = "${aws_vpc.vpc.id}"
+
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = "${aws_internet_gateway.gw.id}"
   }
+
   tags {
     Name       = "main"
     project    = "${var.project}"
