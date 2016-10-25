@@ -1,3 +1,7 @@
+data "aws_region" "current" {
+  current = true
+}
+
 resource "aws_vpc" "vpc" {
   cidr_block = "${var.cidr}"
   enable_dns_hostnames = true
@@ -32,6 +36,12 @@ resource "aws_route_table" "r" {
 }
 
 resource "aws_main_route_table_association" "a" {
-  vpc_id = "${aws_vpc.vpc.id}"
+  vpc_id         = "${aws_vpc.vpc.id}"
   route_table_id = "${aws_route_table.r.id}"
+}
+
+resource "aws_vpc_endpoint" "private-s3" {
+  vpc_id          = "${aws_vpc.vpc.id}"
+  service_name    = "com.amazonaws.${data.aws_region.current.name}.s3"
+  route_table_ids = ["${aws_route_table.r.id}"]
 }
