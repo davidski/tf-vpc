@@ -56,12 +56,12 @@ resource "aws_vpc_endpoint" "private-s3" {
 
 resource "aws_flow_log" "vpc_flow_log" {
   log_group_name = "${aws_cloudwatch_log_group.vpc_flow_log.name}"
-  iam_role_arn = "${var.logging_role}"
-  vpc_id = "${aws_vpc.vpc.id}"
-  traffic_type = "ALL"
+  iam_role_arn   = "${var.logging_role}"
+  vpc_id         = "${aws_vpc.vpc.id}"
+  traffic_type   = "ALL"
 }
 
 resource "aws_cloudwatch_log_group" "vpc_flow_log" {
-    name = "${var.project}/vpc/flowlog_group"
-    retention_in_days = "${var.flowlog_retention_days}"
+  name              = "${var.project}/vpc/flowlog_group"
+  retention_in_days = "${var.flowlog_retention_days}"
 }

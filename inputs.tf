@@ -10,5 +10,5 @@ variable "logging_role" {
 
 variable "flowlog_retention_days" {
   description = "Number of days to retain VPC flowlogs"
-  default = 60
+  default     = 60
 }
