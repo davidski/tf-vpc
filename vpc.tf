@@ -50,13 +50,13 @@ resource "aws_vpc_endpoint" "private-s3" {
   route_table_ids = [aws_route_table.r.id]
 }
 
-# Sestup VPC flow logs
+# Setup VPC flow logs
 
 resource "aws_flow_log" "vpc_flow_log" {
-  log_group_name = aws_cloudwatch_log_group.vpc_flow_log.name
-  iam_role_arn   = var.logging_role
-  vpc_id         = aws_vpc.vpc.id
-  traffic_type   = "ALL"
+  log_destination = aws_cloudwatch_log_group.vpc_flow_log.arn
+  iam_role_arn    = var.logging_role
+  vpc_id          = aws_vpc.vpc.id
+  traffic_type    = "ALL"
 }
 
 resource "aws_cloudwatch_log_group" "vpc_flow_log" {
